@@ -47,7 +47,7 @@ class JotBoxViewProvider {
             localResourceRoots: [this._extensionUri],
         };
         webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
-        webviewView.webview.onDidReceiveMessage((message) => {
+        webviewView.webview.onDidReceiveMessage(async (message) => {
             switch (message.type) {
                 case 'getNotes':
                     this._sendNotes();
@@ -66,6 +66,15 @@ class JotBoxViewProvider {
                 case 'deleteNote': {
                     storage.deleteNote(message.id);
                     this._sendNotes();
+                    break;
+                }
+                case 'confirmDeleteNote': {
+                    const answer = await vscode.window.showWarningMessage('Are you sure you want to delete this note?', { modal: true }, 'Delete');
+                    if (answer === 'Delete') {
+                        storage.deleteNote(message.id);
+                        this._sendNotes();
+                        this._view?.webview.postMessage({ type: 'noteDeleted' });
+                    }
                     break;
                 }
                 case 'togglePin': {

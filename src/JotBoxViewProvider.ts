@@ -21,7 +21,7 @@ export class JotBoxViewProvider implements vscode.WebviewViewProvider {
 
     webviewView.webview.html = this._getHtmlForWebview(webviewView.webview);
 
-    webviewView.webview.onDidReceiveMessage((message: ToExtensionMessage) => {
+    webviewView.webview.onDidReceiveMessage(async (message: ToExtensionMessage) => {
       switch (message.type) {
         case 'getNotes':
           this._sendNotes();
@@ -40,6 +40,19 @@ export class JotBoxViewProvider implements vscode.WebviewViewProvider {
         case 'deleteNote': {
           storage.deleteNote(message.id);
           this._sendNotes();
+          break;
+        }
+        case 'confirmDeleteNote': {
+          const answer = await vscode.window.showWarningMessage(
+            'Are you sure you want to delete this note?',
+            { modal: true },
+            'Delete'
+          );
+          if (answer === 'Delete') {
+            storage.deleteNote(message.id);
+            this._sendNotes();
+            this._view?.webview.postMessage({ type: 'noteDeleted' });
+          }
           break;
         }
         case 'togglePin': {

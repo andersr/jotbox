@@ -32,6 +32,8 @@
       renderList();
     } else if (message.type === 'noteCreated') {
       openEditor(message.note);
+    } else if (message.type === 'noteDeleted') {
+      closeEditor();
     }
   });
 
@@ -70,8 +72,7 @@
   // Delete
   deleteBtn.addEventListener('click', () => {
     if (!editingNote) return;
-    vscode.postMessage({ type: 'deleteNote', id: editingNote.id });
-    closeEditor();
+    vscode.postMessage({ type: 'confirmDeleteNote', id: editingNote.id });
   });
 
   function getDisplayTitle(note) {

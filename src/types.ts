@@ -17,7 +17,9 @@ export type ToExtensionMessage =
   | { type: 'createNote' }
   | { type: 'updateNote'; note: Note }
   | { type: 'deleteNote'; id: string }
+  | { type: 'confirmDeleteNote'; id: string }
   | { type: 'togglePin'; id: string };
 
 export type ToWebviewMessage =
-  | { type: 'notesLoaded'; notes: Note[] };
+  | { type: 'notesLoaded'; notes: Note[] }
+  | { type: 'noteDeleted' };
