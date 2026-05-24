@@ -32,7 +32,7 @@
     "commands": [
       {
         "command": "jotbox.newNote",
-        "title": "JotBox: New Note"
+        "title": "JotBox: Add to Side Panel"
       },
       {
         "command": "jotbox.refreshNotes",
@@ -43,7 +43,8 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
+    "watch": "tsc -watch -p ./",
+    "install-local": "npm run compile && npx vsce package --no-dependencies && code --install-extension jotbox-0.1.0.vsix"
   },
   "devDependencies": {
     "@types/vscode": "^1.85.0",

@@ -40,7 +40,8 @@ const JotBoxViewProvider_1 = require("./JotBoxViewProvider");
 function activate(context) {
     const provider = new JotBoxViewProvider_1.JotBoxViewProvider(context.extensionUri);
     context.subscriptions.push(vscode.window.registerWebviewViewProvider('jotbox.notesView', provider));
-    context.subscriptions.push(vscode.commands.registerCommand('jotbox.newNote', () => {
+    context.subscriptions.push(vscode.commands.registerCommand('jotbox.newNote', async () => {
+        await vscode.commands.executeCommand('jotbox.notesView.focus');
         provider.createNote();
     }));
     context.subscriptions.push(vscode.commands.registerCommand('jotbox.refreshNotes', () => {

@@ -9,7 +9,8 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand('jotbox.newNote', () => {
+    vscode.commands.registerCommand('jotbox.newNote', async () => {
+      await vscode.commands.executeCommand('jotbox.notesView.focus');
       provider.createNote();
     })
   );
