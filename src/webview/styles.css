@@ -205,7 +205,18 @@ body {
 #editor-actions button.danger {
   background: var(--vscode-errorForeground);
   color: var(--vscode-editor-background);
+}
+
+#saved-indicator {
+  font-size: 11px;
+  opacity: 0;
   margin-left: auto;
+  color: var(--vscode-descriptionForeground);
+  transition: opacity 0.2s ease;
+}
+
+#saved-indicator.visible {
+  opacity: 1;
 }
 
 .hidden {

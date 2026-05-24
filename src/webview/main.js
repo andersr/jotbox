@@ -18,8 +18,63 @@
   const noteContentEl = document.getElementById('note-content');
   const tagInputEl = document.getElementById('tag-input');
   const saveBtn = document.getElementById('save-btn');
-  const cancelBtn = document.getElementById('cancel-btn');
   const deleteBtn = document.getElementById('delete-btn');
+
+  // Auto-save
+  let autoSaveTimer = null;
+  const savedIndicator = document.getElementById('saved-indicator');
+
+  let savedTimeout = null;
+
+  function debounce(fn, delay) {
+    return function (...args) {
+      clearTimeout(autoSaveTimer);
+      showSavingIndicator();
+      autoSaveTimer = setTimeout(() => {
+        autoSaveTimer = null;
+        fn.apply(this, args);
+      }, delay);
+    };
+  }
+
+  function autoSave() {
+    if (!editingNote) return;
+    const content = noteContentEl.value;
+    const tags = tagInputEl.value
+      .split(',')
+      .map((t) => t.trim())
+      .filter((t) => t.length > 0);
+
+    editingNote = { ...editingNote, content, tags };
+    vscode.postMessage({
+      type: 'updateNote',
+      note: editingNote,
+    });
+    showSavedIndicator();
+  }
+
+  function flushAutoSave() {
+    if (autoSaveTimer !== null) {
+      clearTimeout(autoSaveTimer);
+      autoSaveTimer = null;
+      autoSave();
+    }
+  }
+
+  function showSavingIndicator() {
+    clearTimeout(savedTimeout);
+    savedIndicator.textContent = 'Saving...';
+    savedIndicator.classList.add('visible');
+  }
+
+  function showSavedIndicator() {
+    savedIndicator.textContent = 'Saved.';
+    savedIndicator.classList.add('visible');
+    clearTimeout(savedTimeout);
+    savedTimeout = setTimeout(() => savedIndicator.classList.remove('visible'), 1500);
+  }
+
+  const debouncedAutoSave = debounce(autoSave, 500);
 
   // Request notes on load
   vscode.postMessage({ type: 'getNotes' });
@@ -48,26 +103,16 @@
     vscode.postMessage({ type: 'createNote' });
   });
 
-  // Save
+  // Auto-save on input
+  noteContentEl.addEventListener('input', debouncedAutoSave);
+  tagInputEl.addEventListener('input', debouncedAutoSave);
+
+  // Done (close editor, flushing any pending save)
   saveBtn.addEventListener('click', () => {
-    if (!editingNote) return;
-    const content = noteContentEl.value;
-    const tags = tagInputEl.value
-      .split(',')
-      .map((t) => t.trim())
-      .filter((t) => t.length > 0);
-
-    vscode.postMessage({
-      type: 'updateNote',
-      note: { ...editingNote, content, tags },
-    });
+    flushAutoSave();
     closeEditor();
   });
 
-  // Cancel
-  cancelBtn.addEventListener('click', () => {
-    closeEditor();
-  });
 
   // Delete
   deleteBtn.addEventListener('click', () => {

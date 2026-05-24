@@ -127,8 +127,9 @@ class JotBoxViewProvider {
         <input type="text" id="tag-input" placeholder="Tags (comma-separated)" />
       </div>
       <div id="editor-actions">
-        <button id="save-btn">Save</button>
-        <button id="cancel-btn">Cancel</button>
+        <button id="save-btn">Done</button>
+
+        <span id="saved-indicator">Saved</span>
         <button id="delete-btn" class="danger">Delete</button>
       </div>
     </div>
