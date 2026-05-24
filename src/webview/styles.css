@@ -1,0 +1,213 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  color: var(--vscode-foreground);
+  background: var(--vscode-sideBar-background);
+  padding: 8px;
+}
+
+#toolbar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+#search {
+  flex: 1;
+  padding: 4px 8px;
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  border: 1px solid var(--vscode-input-border, transparent);
+  border-radius: 3px;
+  outline: none;
+}
+
+#search:focus {
+  border-color: var(--vscode-focusBorder);
+}
+
+#new-note-btn {
+  padding: 4px 10px;
+  background: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+#new-note-btn:hover {
+  background: var(--vscode-button-hoverBackground);
+}
+
+/* Tag filter bar */
+#tag-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+#tag-filter:empty {
+  display: none;
+}
+
+.tag-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  cursor: pointer;
+  background: var(--vscode-badge-background);
+  color: var(--vscode-badge-foreground);
+  border: 1px solid transparent;
+}
+
+.tag-chip.active {
+  border-color: var(--vscode-focusBorder);
+}
+
+/* Note list */
+#note-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.note-item {
+  padding: 8px;
+  background: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border, transparent);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.note-item:hover {
+  border-color: var(--vscode-focusBorder);
+}
+
+.note-item-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.note-pin {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.note-title {
+  flex: 1;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.note-date {
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+.note-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.note-tag {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  background: var(--vscode-badge-background);
+  color: var(--vscode-badge-foreground);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 24px 8px;
+  opacity: 0.6;
+}
+
+/* Editor */
+#note-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+#note-content {
+  width: 100%;
+  min-height: 200px;
+  padding: 8px;
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  border: 1px solid var(--vscode-input-border, transparent);
+  border-radius: 3px;
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  resize: vertical;
+  outline: none;
+}
+
+#note-content:focus {
+  border-color: var(--vscode-focusBorder);
+}
+
+#tag-input-row {
+  display: flex;
+  gap: 6px;
+}
+
+#tag-input {
+  flex: 1;
+  padding: 4px 8px;
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground);
+  border: 1px solid var(--vscode-input-border, transparent);
+  border-radius: 3px;
+  outline: none;
+}
+
+#tag-input:focus {
+  border-color: var(--vscode-focusBorder);
+}
+
+#editor-actions {
+  display: flex;
+  gap: 6px;
+}
+
+#editor-actions button {
+  padding: 4px 12px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  background: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+}
+
+#editor-actions button:hover {
+  background: var(--vscode-button-hoverBackground);
+}
+
+#editor-actions button.danger {
+  background: var(--vscode-errorForeground);
+  color: var(--vscode-editor-background);
+  margin-left: auto;
+}
+
+.hidden {
+  display: none !important;
+}

@@ -1,0 +1,54 @@
+{
+  "name": "jotbox",
+  "displayName": "JotBox",
+  "description": "A privacy-first note-taking panel for VSCode",
+  "version": "0.1.0",
+  "publisher": "jotbox",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "jotbox",
+          "title": "JotBox",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "jotbox": [
+        {
+          "type": "webview",
+          "id": "jotbox.notesView",
+          "name": "Notes"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "jotbox.newNote",
+        "title": "JotBox: New Note"
+      },
+      {
+        "command": "jotbox.refreshNotes",
+        "title": "JotBox: Refresh Notes"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0",
+    "@vscode/vsce": "^3.0.0"
+  }
+}
